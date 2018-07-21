@@ -26,4 +26,4 @@ http.listen(3000, function() {
     console.log('listening on *:3000');
 });
 
-twilio.send('7853702439', 'another test message');
+//twilio.send('7853702439', 'another test message');

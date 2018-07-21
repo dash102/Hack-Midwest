@@ -8,11 +8,21 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
+    <div id="sidenav">
+        <h3 id='name'></h3>
+        <h4 id='category'></h4>
+        <h4 id='street'></h4>
+        <h4 id='city-state-postalCode'></h4>
+        <p id='latLng'></p>
+        <p id='summary'></p>
+
+    </div>
     <div id="map"></div>
-    <p>Query (optional): </p>
-    <input id="query-input" placeholder="Any"></input>
+    <div id='geocoder'></div>
+    <p class='recs'>Query (optional): </p>
+    <input id="query-input" class='recs' placeholder="Any"></input>
     <br>
-    <button id="submit-query-button">Find Recommendations</button>
+    <button id="submit-query-button" class='recs'>Find Recommendations</button>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
