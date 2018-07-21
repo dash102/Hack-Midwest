@@ -31,12 +31,26 @@ function startMapbox() {
       }
     
       var feature = features[0];
+
+      var secondaryFeatureString = feature.properties.category_secondary != undefined ? ' (' + 
+        feature.properties.category_secondary + ')' : '';
+      var photoString = feature.properties.photo != undefined ? '<img src=' + feature.properties.photo + ' height="300" />': '';
+      var ratingString = feature.properties.rating != undefined ? '<p>Rating: ' + feature.properties.rating + '</p>' : '';
+      var wifiString = feature.properties.wifi ? '<p style="color:green">Wifi available</p>' : '';
+      var phoneString = feature.properties.phonenumber != undefined ? '<p>Call: ' + feature.properties.phonenumber + '</p>' : '';
+
+      htmlString = '<h3>' + feature.properties.name + '</h3><h5>Category: ' + 
+        feature.properties.category_primary + secondaryFeatureString + '</h5><p>Address: ' + feature.properties.address +
+        ', ' + feature.properties.state + '</p>' + phoneString + photoString + ratingString + wifiString;
       console.log(feature);
+
       var popup = new mapboxgl.Popup({ offset: [0, -15] })
         .setLngLat(feature.geometry.coordinates)
-        .setHTML('<h3>' + feature.properties.name + '</h3><h5>Category: ' + feature.properties.category_primary + '</h5><p>' + feature.properties.description + '</p>')
+        .setHTML(htmlString)
         .setLngLat(feature.geometry.coordinates)
         .addTo(map);
+        
+        map.flyTo({ center: [feature.geometry.coordinates[0], feature.geometry.coordinates[1]] });
     });
 }
 
