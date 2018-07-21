@@ -60,31 +60,9 @@ function startMapbox() {
                     // add marker here
                     marker = new mapboxgl.Marker()
                       .setLngLat([venueLng, venueLat]);
-
-                    console.log(venue);
-                    var name = venue.venue.name;
-                    var street = venue.venue.location.address;
-                    var city = venue.venue.location.city;
-                    var state = venue.venue.location.state;
-                    var zip = venue.venue.location.postalCode;
-                    var address = street + '<br>' + city + ', ' + state + ' ' + zip;
-                    var id = venue.venue.id;
-                    var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>';
-                    /*var secondaryFeatureString = feature.properties.category_secondary != undefined ? ' (' + 
-                      feature.properties.category_secondary + ')' : '';
-                    var photoString = feature.properties.photo != undefined ? '<img src=' + feature.properties.photo + ' height="300" />': '';
-                    var ratingString = feature.properties.rating != undefined ? '<p>Rating: ' + feature.properties.rating + '</p>' : '';
-                    var wifiString = feature.properties.wifi ? '<p style="color:green">Wifi available</p>' : '';
-                    var phoneString = feature.properties.phonenumber != undefined ? '<p>Call: ' + feature.properties.phonenumber + '</p>' : '';
-              
-                    htmlString = '<h3>' + feature.properties.name + '</h3><h5>Category: ' + 
-                      feature.properties.category_primary + secondaryFeatureString + '</h5><p>Address: ' + feature.properties.address +
-                      ', ' + feature.properties.state + '</p>' + phoneString + photoString + ratingString + wifiString;
-*/
-                    
                     var popup = new mapboxgl.Popup({ offset: [0, -30] })
                       .setLngLat(marker._lngLat)
-                      .setHTML(htmlString)
+                      .setHTML("hi")
                       .addTo(map);
                     marker.setPopup(popup);
                     marker.togglePopup(popup);
