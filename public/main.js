@@ -28,6 +28,8 @@ function startMapbox() {
     
     var findRecommendationButton = document.getElementById('submit-query-button');
     var markers = [];
+    
+    var marker;
     findRecommendationButton.addEventListener('click', function() {
       var latRec = map.getCenter().lat;
       var lngRec = map.getCenter().lng;
@@ -55,15 +57,20 @@ function startMapbox() {
                     content = 'Name: ' + venue.venue.name +
                                 ' Address: ' + venue.venue.location.address +
                                 ' Lat/long: ' + venueLat + ', ' + venueLng + '\n';
-                    console.log(content);
                     // add marker here
-                    var marker = new mapboxgl.Marker()
+                    marker = new mapboxgl.Marker()
                       .setLngLat([venueLng, venueLat]);
+                    var popup = new mapboxgl.Popup({ offset: [0, -30] })
+                      .setLngLat(marker._lngLat)
+                      .setHTML("hi")
+                      .addTo(map);
+                    marker.setPopup(popup);
+                    marker.togglePopup(popup);
                     markers.push(marker);
                     marker.addTo(map);
                 });
             });
-    });
+      });
     /*map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point, {
         layers: ['kc-locations']
