@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <title>Socket.IO chat</title>
+    <link href="style.css" rel="stylesheet" type="text/css" >
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body>
+    <div id="map"></div>
+    <p>Location: </p>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box"></input>
+    <br>
+    <p>Query (optional): </p>
+    <input id="query-input" placeholder="Any"></input>
+    <br>
+    <button id="submit-query-button">Find Recommendations</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type='text/javascript' src='/config.js'></script>
+    <script src="main.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAUCHuvZdA4jXEj_3ozls0MUEEl7vuvG4s&callback=initMap">
+    </script>
+
+</body>
+</html>
