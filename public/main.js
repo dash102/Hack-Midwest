@@ -11,19 +11,56 @@ function addSearch(map) {
   map.addControl(new MapboxGeocoder({
     accessToken: MAPS_API_KEY
   }));
+  
 }
 
 function startMapbox() {
     mapboxgl.accessToken = MAPS_API_KEY;
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/dash102/cjjvnp4yx5e3x2sqvqddxuhd9',
-      center: [-94.5786, 39.0997],
-      zoom: 8
+      //style: 'mapbox://styles/dash102/cjjvnp4yx5e3x2sqvqddxuhd9',
+      style: 'mapbox://styles/mapbox/streets-v10',
+      zoom: 1
     });
 
     addSearch(map);
-    map.on('click', function(e) {
+    
+    var findRecommendationButton = document.getElementById('submit-query-button');
+    var markers = [];
+    findRecommendationButton.addEventListener('click', function() {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].remove();
+      }
+
+      var query = document.getElementById('query-input').value;
+      var fourSquareLink = 'https://api.foursquare.com/v2/venues/explore/?' + 
+        'll=39.0997,-94.5786' + '&' + 
+        'limit=100&' + 
+        'query=' + query + '&' + 
+        'client_id=' + CLIENT_ID + '&' + 
+        'client_secret=' + CLIENT_SECRET +
+        '&v=20180719';
+        console.log(fourSquareLink);
+        $.getJSON(fourSquareLink,
+            function (data) {
+                
+                console.log(data);
+                $.each(data.response.groups[0].items, function (i, venue) {
+                    var venueLat = venue.venue.location.lat;
+                    var venueLng = venue.venue.location.lng;
+                    content = 'Name: ' + venue.venue.name +
+                                ' Address: ' + venue.venue.location.address +
+                                ' Lat/long: ' + venueLat + ', ' + venueLng + '\n';
+                    console.log(content);
+                    // add marker here
+                    var marker = new mapboxgl.Marker()
+                      .setLngLat([venueLng, venueLat]);
+                    markers.push(marker);
+                    marker.addTo(map);
+                });
+            });
+    });
+    /*map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point, {
         layers: ['kc-locations']
       });
@@ -53,7 +90,6 @@ function startMapbox() {
         .addTo(map);
         
         map.flyTo({ center: [feature.geometry.coordinates[0], feature.geometry.coordinates[1]] });
-    });
+    });*/
 
-    var findRecommendationButton = document.getElementById('submit-query-button');
 }
