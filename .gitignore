@@ -1,4 +1,8 @@
 public/config.js
 box_config.json
 twilio_config.json
-/node_modules/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
