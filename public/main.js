@@ -6,8 +6,6 @@ function initMap() {
     // The location of Uluru
     //var uluru = {lat: -25.344, lng: 131.036};
     // The map, centered at Uluru
-    var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 1, center: {lat: 0, lng: 0}});
     // The marker, positioned at Uluru
     //var marker = new google.maps.Marker({position: uluru, map: map});
     //initAutocomplete(map);
@@ -18,7 +16,27 @@ function startMapbox() {
     mapboxgl.accessToken = MAPS_API_KEY;
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v10'
+      style: 'mapbox://styles/dash102/cjjvnp4yx5e3x2sqvqddxuhd9',
+      center: [-94.5786, 39.0997],
+      zoom: 8
+    });
+
+    map.on('click', function(e) {
+      var features = map.queryRenderedFeatures(e.point, {
+        layers: ['kc-locations'] // replace this with the name of the layer
+      });
+    
+      if (!features.length) {
+        return;
+      }
+    
+      var feature = features[0];
+      console.log(feature);
+      var popup = new mapboxgl.Popup({ offset: [0, -15] })
+        .setLngLat(feature.geometry.coordinates)
+        .setHTML('<h3>' + feature.properties.name + '</h3><h5>Category: ' + feature.properties.category_primary + '</h5><p>' + feature.properties.description + '</p>')
+        .setLngLat(feature.geometry.coordinates)
+        .addTo(map);
     });
 }
 
