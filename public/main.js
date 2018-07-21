@@ -9,7 +9,8 @@ function initMap() {
 function addSearch(map) {
   console.log("adding search");
   map.addControl(new MapboxGeocoder({
-    accessToken: MAPS_API_KEY
+    accessToken: MAPS_API_KEY,
+    placeholder: 'Where would you like to go?'
   }));
   
 }
@@ -28,13 +29,16 @@ function startMapbox() {
     var findRecommendationButton = document.getElementById('submit-query-button');
     var markers = [];
     findRecommendationButton.addEventListener('click', function() {
+      var latRec = map.getCenter().lat;
+      var lngRec = map.getCenter().lng;
       for (var i = 0; i < markers.length; i++) {
         markers[i].remove();
       }
 
       var query = document.getElementById('query-input').value;
+      query = query.replace(/\s/g, '_');
       var fourSquareLink = 'https://api.foursquare.com/v2/venues/explore/?' + 
-        'll=39.0997,-94.5786' + '&' + 
+        'll=' + latRec + ',' + lngRec + '&' + // change lat lng here
         'limit=100&' + 
         'query=' + query + '&' + 
         'client_id=' + CLIENT_ID + '&' + 
