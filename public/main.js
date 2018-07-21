@@ -16,7 +16,6 @@ function addSearch(map) {
 }
 
 function startMapbox() {
-<<<<<<< HEAD
   mapboxgl.accessToken = MAPS_API_KEY;
   var map = new mapboxgl.Map({
     container: 'map',
@@ -24,73 +23,6 @@ function startMapbox() {
     style: 'mapbox://styles/mapbox/streets-v10',
     zoom: 1
   });
-=======
-    mapboxgl.accessToken = MAPS_API_KEY;
-    var map = new mapboxgl.Map({
-      container: 'map',
-      //style: 'mapbox://styles/dash102/cjjvnp4yx5e3x2sqvqddxuhd9',
-      style: 'mapbox://styles/mapbox/streets-v10',
-      zoom: 1
-    });
-
-    addSearch(map);
-    
-    var findRecommendationButton = document.getElementById('submit-query-button');
-    var markers = [];
-    
-    var marker;
-    findRecommendationButton.addEventListener('click', function() {
-      var latRec = map.getCenter().lat;
-      var lngRec = map.getCenter().lng;
-      for (var i = 0; i < markers.length; i++) {
-        markers[i].remove();
-      }
-
-      var query = document.getElementById('query-input').value;
-      query = query.replace(/\s/g, '_');
-      var fourSquareLink = 'https://api.foursquare.com/v2/venues/explore/?' + 
-        'll=' + latRec + ',' + lngRec + '&' + // change lat lng here
-        'limit=100&' + 
-        'query=' + query + '&' + 
-        'client_id=' + CLIENT_ID + '&' + 
-        'client_secret=' + CLIENT_SECRET +
-        '&v=20180719';
-        console.log(fourSquareLink);
-        $.getJSON(fourSquareLink,
-            function (data) {
-                
-                console.log(data);
-                $.each(data.response.groups[0].items, function (i, venue) {
-                    var venueLat = venue.venue.location.lat;
-                    var venueLng = venue.venue.location.lng;
-                    content = 'Name: ' + venue.venue.name +
-                                ' Address: ' + venue.venue.location.address +
-                                ' Lat/long: ' + venueLat + ', ' + venueLng + '\n';
-                    // add marker here
-                    marker = new mapboxgl.Marker()
-                      .setLngLat([venueLng, venueLat]);
-                    var popup = new mapboxgl.Popup({ offset: [0, -30] })
-                      .setLngLat(marker._lngLat)
-                      .setHTML("hi")
-                      .addTo(map);
-                    marker.setPopup(popup);
-                    marker.togglePopup(popup);
-                    markers.push(marker);
-                    marker.addTo(map);
-                });
-            });
-      });
-    /*map.on('click', function(e) {
-      var features = map.queryRenderedFeatures(e.point, {
-        layers: ['kc-locations']
-      });
-    
-      if (!features.length) {
-        return;
-      }
-    
-      var feature = features[0];
->>>>>>> fc4c111db0d8c89425227e318cf2ac65c3deb776
 
   addSearch(map);
   
