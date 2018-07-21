@@ -26,4 +26,5 @@ http.listen(3000, function() {
     console.log('listening on *:3000');
 });
 
-box.get();
+box.put('data')
+//box.get('306460740109', (data) => console.log(data));
