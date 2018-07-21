@@ -1,35 +1,42 @@
 var box = require('box-node-sdk');
 var fs = require('fs');
-var readable = require('stream').Readable;
 
 const config = JSON.parse(fs.readFileSync('box_config.json', encoding='utf-8'));
 const sdk = box.getPreconfiguredInstance(config);
 const client = sdk.getAppAuthClient('enterprise', config.enterpriseID);
 
-function callback(err, res) {
+function uuid() {
+  var uuid = "", i, random;
+  for (i = 0; i < 32; i++) {
+    random = Math.random() * 16 | 0;
 
+    if (i == 8 || i == 12 || i == 16 || i == 20) {
+      uuid += "-"
+    }
+    uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+  }
+  return uuid;
 }
 
 module.exports = {
   put: function(data) {
     const folderId = '0';
-    const fileName = guid();
-
-    const stream = new Readable();
-    s._read = () => {};
-    s.push(data);
-    s.push(null);
+    const fileName = uuid().toString();
 
     client.files.uploadFile(
-      folderId, fileName, stream, callback
+      folderId, fileName, data, (err, res) => { console.log(err); console.log(res) }
     );
   },
-  get: function() {
-    client.files.getReadStream('306452299841', null, (error, file) => {
-      if(!error) {
-        var output = fs.createWriteStream('output.txt');
-        file.pipe(output);
+  get: function(fileId, callback) {
+    client.files.getReadStream(fileId, null, (error, file) => {
+      if(error) {
+        console.log('Invalid file ID');
+        return;
       }
+
+      const chunks = [];
+      file.on('data', (chunk) => { chunks.push(chunk) });
+      file.on('end', () => { callback(chunks.length === 1 ? chunks[0].toString('utf-8') : Buffer.concat(chunks).toString('utf-8')) });
     });
 
   }
