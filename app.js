@@ -20,7 +20,7 @@ app.get('/view', (req, res) => res.send(view.render(req.query['id'])));
 app.use(express.static(path.join(__dirname, 'public')));
 
 function sendUrl(fileId, numbers) {
-  var url = 'https://roadtrip.us-east-1.elasticbeanstalk.com/view?' + fileId;
+  var url = 'roadtrip.us-east-1.elasticbeanstalk.com/v?i=' + fileId;
   numbers.forEach(number => twilio.send(number, url));
 }
 
@@ -29,9 +29,9 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log('user disconnected');
     });
-    socket.on('itinerary', function(jsonString) {
-        console.log(jsonString);
-        box.put(jsonString.itinerary, sendUrl, jsonString.phoneNumbers);
+    socket.on('itinerary', function(json) {
+        console.log(json);
+        box.put(json.itinerary, sendUrl, json.phoneNumbers);
     });
 });
 
