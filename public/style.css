@@ -1,9 +1,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font: 13px Helvetica, Arial; }
 
-#map { 
-    height: 600px; 
-    width: 80.3%; 
+#map {
+    height: 600px;
+    width: 80.3%;
     margin-left: 300px;
 }
 
@@ -15,6 +15,11 @@ body { font: 13px Helvetica, Arial; }
     height: 100%;
     width: 300px;;
     position: fixed;
+}
+
+#info {
+  height: 25vh;
+  border-bottom: 1px solid black;
 }
 
 #geocoder {

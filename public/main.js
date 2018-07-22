@@ -156,13 +156,17 @@ function openModal(currentVenue) {
       }
   }
   
-  
   var coordinatesLat = currentVenue.venue.location.lat;
   var coordinatesLng = currentVenue.venue.location.lng;
+  setSubmitButtonEventListener(coordinatesLat, coordinatesLng, modal);
 
+}
+
+function setSubmitButtonEventListener(coordinatesLat, coordinatesLng, modal) {
+  
   var submitButton = document.getElementById('submit-itinerary');
-  submitButton.addEventListener('click', function() {
 
+  submitButton.addEventListener('click', function() {
     var checkpointName = document.getElementById('checkpoint').value;
     var startDate = document.getElementById('start').value;
     var endDate = document.getElementById('end').value;
@@ -178,7 +182,15 @@ function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng
                 "endDate" : endDate, "time" : time, "coordinates" : {"lat" : coordinatesLat, "lng" : coordinatesLng}, 
                 "comments" : comments};
   itineraryJSON.itinerary.push(object);
+  addToItineraryDisplay(object);
   showConfirmationModal();  
+}
+
+function addToItineraryDisplay(object) {
+  var checkpointString = "<b>Name: " + object.checkpointName + "</b><br>" + 
+                         "Start date: " + object.startDate + " | " + "End date: " + object.endDate + "<br>" + 
+                         "Time: " + object.time + "<br><br>";
+  document.getElementById('itinerary-display').innerHTML += checkpointString;
 }
 
 function showConfirmationModal() {
