@@ -27,17 +27,18 @@ module.exports = {
       folderId, fileName, data.toString(), (err, res) => { err ? console.log(err) : callback(res.entries[0].id, callbackParams) }
     );
   },
-  get: function(fileId, callback) {
-    client.files.getReadStream(fileId, null, (error, file) => {
-      if(error) {
-        console.log('Invalid file ID');
-        return;
-      }
+  get: async function(fileId) {
+    console.log(fileId);
+    return new Promise((resolve, reject) => {
+      client.files.getReadStream(fileId, null, (error, file) => {
+        if(error) {
+          reject('Invalid file ID');
+        }
 
-      const chunks = [];
-      file.on('data', (chunk) => { chunks.push(chunk) });
-      file.on('end', () => { callback(chunks.length === 1 ? chunks[0].toString('utf-8') : Buffer.concat(chunks).toString('utf-8')) });
+        const chunks = [];
+        file.on('data', (chunk) => { chunks.push(chunk) });
+        file.on('end', () => { resolve(chunks.length === 1 ? chunks[0].toString('utf-8') : Buffer.concat(chunks).toString('utf-8')) });
+      });
     });
-
   }
 }
