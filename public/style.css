@@ -2,8 +2,8 @@
 body { font: 13px Helvetica, Arial; }
 
 #map { 
-    height: 400px; 
-    width: 100%; 
+    height: 600px; 
+    width: 80.3%; 
     margin-left: 300px;
 }
 
@@ -19,13 +19,16 @@ body { font: 13px Helvetica, Arial; }
 
 #geocoder {
     margin-left: 300px;
-    z-index: 0;
+    z-index: -1;
+}
+
+.mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-geocoder ul {
+    box-shadow: none !important;
 }
 
 #add-to-itinerary {
     display: none;
 }
-
 
 /* The Modal (background) */
 .modal {
@@ -38,8 +41,7 @@ body { font: 13px Helvetica, Arial; }
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* Modal Content */
@@ -48,7 +50,8 @@ body { font: 13px Helvetica, Arial; }
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 40%;
+    height: 50%;
 }
 
 /* The Close Button */

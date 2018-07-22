@@ -51,8 +51,10 @@
                         min="9:00" max="18:00" required />
                 </div>
             </fieldset>
-        
-        
+            <br>
+            <textarea rows="6" columns="600" id="comments" placeholder="Notes (optional)"></textarea>
+            <br><br>
+            <button type="submit">Add to Itinerary</button>
         </div>
       
       </div>
@@ -63,14 +65,13 @@
     <br>
     <button id="submit-query-button" class='recs'>Find Recommendations</button>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+    <link rel='stylesheet' href='geocoder.css' type='text/css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type='text/javascript' src='/config.js'></script>
     <script src="main.js"></script>
     <script src="/socket.io.js"></script>
     <script>
       var socket = io.connect('http://localhost:3001');
-      socket.emit('itinerary', '{"sendTo": ["7853702439"], "itinerary": { "First": "a test object"}}');
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAUCHuvZdA4jXEj_3ozls0MUEEl7vuvG4s&callback=initMap">

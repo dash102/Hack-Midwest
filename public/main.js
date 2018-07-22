@@ -20,6 +20,7 @@ function addSearch(map) {
     placeholder: 'Where would you like to go?'
   });
   document.getElementById('geocoder').appendChild(geocoder.onAdd(map));  
+  console.log(geocoder);
 }
 
 function startMapbox() {
@@ -53,11 +54,9 @@ function startMapbox() {
       'client_id=' + CLIENT_ID + '&' + 
       'client_secret=' + CLIENT_SECRET +
       '&v=20180719';
-      console.log(fourSquareLink);
       $.getJSON(fourSquareLink,
         function (data) {
             
-          console.log(data);
           $.each(data.response.groups[0].items, function (i, venue) {
             currentVenue = venue;
             var venueLat = venue.venue.location.lat;
@@ -112,14 +111,18 @@ function openModal() {
   // Get the <span> element that closes the modal
   var close = document.getElementsByClassName("close")[0];
   modal.style.display = "block";
-
+  var geocoder = document.getElementsByClassName('mapboxgl-ctrl-geocoder')[0];
+  geocoder.style.backgroundColor = 'rgba(0, 0, 0, 0.01)';
+  close.style.color = 'rgba(0, 0, 0, 0.01)';
   // When the user clicks on <span> (x), close the modal
   close.onclick = function() {
       modal.style.display = "none";
+      geocoder.style.backgroundColor = 'rgba(255, 255, 255, 1)';
   }
   window.onclick = function(e) {
       if (e.target == modal) {
           modal.style.display = "none";
+          geocoder.style.backgroundColor = 'rgba(255, 255, 255, 1)';
       }
   }
 }
