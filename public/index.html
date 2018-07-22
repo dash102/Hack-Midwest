@@ -6,6 +6,10 @@
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css' rel='stylesheet' />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
     <div id="sidenav">
@@ -20,7 +24,8 @@
         </div>
         <div id='itinerary-display'></div>
     </div>
-    <div id="confirmationModal" class="modal">
+
+    <div id="confirmationModal" class="modal1">
         <div id='confirmationModalContent' class="modal-content">
             <span class="close">&times;</span>
             Done. Add another checkpoint?<br>
@@ -28,7 +33,7 @@
             <button id="finish">No, I'm done.</button>
         </div>
     </div>
-    <div id="confirmationModal" class="modal">
+    <div id="confirmationModal" class="modal1">
         <div id='confirmationModalContent' class="modal-content">
             <span class="close">&times;</span>
             Done. Add another checkpoint?<br>
@@ -36,7 +41,7 @@
             <button id="finish">No, I'm done.</button>
         </div>
     </div>
-    <div id="phoneNumberModal" class="modal">
+    <div id="phoneNumberModal" class="modal1">
             <div id='phoneNumberModalContent' class="modal-content">
                 <span class="close">&times;</span>
                 Add phone numbers to send your itinerary to (one per line)<br>
@@ -44,68 +49,54 @@
                 <button id='done-numbers'>Done</button>
             </div>
         </div>
-    <div id="myModal" class="modal">
-
-
-        <!-- Modal content -->
+    <div id="myModal" class="modal1">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <fieldset>
-                <legend>Name Checkpoint</legend>
-
-                <div>
-                    <label for="checkpoint">Checkpoint</label>
-                    <input id="checkpoint" name="checkpoint" />
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="checkpoint" type="text">
+                    <label for="checkpoint">Description</label>
                 </div>
-
-            </fieldset>
-            <br>
-
-            <fieldset>
-                <legend>Choose trip dates</legend>
-
-                <div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input type="date" id="start" value="2018-07-22">
                     <label for="start">Start</label>
-                    <input type="date" id="start" name="trip"
-                            value="2018-07-22"
-                            min="2018-01-01" max="2018-12-31" />
                 </div>
-
-                <div>
+                <div class="input-field col s6">
+                    <input id="end" type="date" value="2018-07-29" >
                     <label for="end">End</label>
-                    <input type="date" id="end" name="trip"
-                            value="2018-07-29"
-                            min="2018-01-01" max="2018-12-31"/ >
                 </div>
-
-            </fieldset>
-            <br>
-
-            <fieldset>
-                <legend>Select time</legend>
-
-                <div class="control">
-                    <label for="trip-time">Time:</label>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
                     <input type="time" id="trip-time" name="trip-time"
-                        min="9:00" max="18:00" required />
+                    min="9:00" max="18:00" required />
+                    <label for="trip-time">Time</label>
                 </div>
-            </fieldset>
-            <br>
-            <textarea rows="6" columns="600" id="comments" placeholder="Notes (optional)"></textarea>
-            <br><br>
-            <button type="submit" id="submit-itinerary">Add to Itinerary</button>
+            </div>
+            <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="comments" name="comments" />
+                        <label for="comments">Notes (optional)</label>
+                    </div>
+                </div>
+            <button type="submit" class='btn waves-effect waves-light btn-flat' id="submit-itinerary">Add to Itinerary <i class="material-icons right">send</i></button>
         </div>
 
       </div>
-    <div id="map"></div>
+    <div id="map"></div><br>
     <div id='geocoder'></div>
-    <p class='recs' id='query-text'>Query (optional): </p>
-    <input id="query-input" class='recs' placeholder="Any"></input>
+    <input id="query-input" class='recs' placeholder="Query (optional)"></input>
     <br>
-    <button id="submit-query-button" class='recs'>Find Recommendations</button>
+    <button id="submit-query-button" class='recs btn waves-effect waves-light btn-large'>Go <i class="material-icons right">send</i></button>
+    <img id='line' src='images/line.png'></img>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
     <link rel='stylesheet' href='geocoder.css' type='text/css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     <script type='text/javascript' src='/config.js'></script>
     <script src="main.js"></script>
     <script src="/socket.io.js"></script>

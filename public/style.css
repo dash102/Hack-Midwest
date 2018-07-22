@@ -1,13 +1,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; }
+body { font: 13px Helvetica, Arial; background-color: #ffffff; }
 
 #map {
     height: 600px;
     width: 80.3%;
-    margin-left: 300px;
-}
-
-.recs {
     margin-left: 300px;
 }
 
@@ -23,12 +19,34 @@ body { font: 13px Helvetica, Arial; }
 }
 
 #geocoder {
-    margin-left: 300px;
-    z-index: -1;
+    margin-left: 600px;
+    text-indent: 40px;
+    display: inline-block;
+}
+
+#line {
+    position: absolute;
+    height: 90px;
+    width: 1px;
+    margin-left: 920px;
+    margin-top: -95px;
+}
+
+#query-input {
+    margin-left: 575px;
+    width: 20%;
+    display: inline-block;
+}
+
+#submit-query-button {
+    position: absolute;
+    margin-left: 950px;
+    margin-top: -75px;
 }
 
 .mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-geocoder ul {
     box-shadow: none !important;
+    text-indent: 40px;
 }
 
 #add-to-itinerary {
@@ -36,15 +54,15 @@ body { font: 13px Helvetica, Arial; }
 }
 
 /* The Modal (background) */
-.modal {
+.modal1 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    z-index: 2; /* Sit on top */
+    padding-top: 90px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    height: 105%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.4);
 }
@@ -57,6 +75,10 @@ body { font: 13px Helvetica, Arial; }
     border: 1px solid #888;
     width: 40%;
     height: 70%;
+}
+
+#submit-itinerary {
+    margin-left: 190px;
 }
 
 #confirmationModalContent {
