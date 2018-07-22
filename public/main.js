@@ -70,7 +70,7 @@ function startMapbox() {
             var state = venue.venue.location.state;
             var zip = venue.venue.location.postalCode;
             var address = street + '<br>' + city + ', ' + state + ' ' + zip;
-            var button = '<button id="details-button" onclick="viewLocationDetails();">See details</button>';
+            var button = '<button id="details-button" onclick="viewLocationDetails(' + venue + ');">See details</button>';
 
             var id = venue.venue.id;
             var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
@@ -87,8 +87,7 @@ function startMapbox() {
     });
 }
 
-function viewLocationDetails() {
-  console.log(currentVenue);
+function viewLocationDetails(currentVenue) {
   var name = currentVenue.venue.name;
   var category = currentVenue.venue.categories[0].name;
   var street = currentVenue.venue.location.address;
