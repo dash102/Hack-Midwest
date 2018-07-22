@@ -1,7 +1,14 @@
 var CLIENT_ID = config.CLIENT_ID;
 var CLIENT_SECRET = config.CLIENT_SECRET;
 var MAPS_API_KEY = config.MAPS_API_KEY;
+var currentVenue;
+var itineraryJSON = {
+  "sendTo" : [
 
+  ],
+  "itinerary" : [
+  ]
+};
 function initMap() {
     startMapbox();
 }
@@ -52,6 +59,7 @@ function startMapbox() {
             
           console.log(data);
           $.each(data.response.groups[0].items, function (i, venue) {
+            currentVenue = venue;
             var venueLat = venue.venue.location.lat;
             var venueLng = venue.venue.location.lng;
             // add marker here
@@ -63,8 +71,8 @@ function startMapbox() {
             var state = venue.venue.location.state;
             var zip = venue.venue.location.postalCode;
             var address = street + '<br>' + city + ', ' + state + ' ' + zip;
-            var button = '<button id="details-button" onclick=viewLocationDetails(venue);>See details</button>';
-            
+            var button = '<button id="details-button" onclick="viewLocationDetails();">See details</button>';
+
             var id = venue.venue.id;
             var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
             var popup = new mapboxgl.Popup({ offset: [0, -30] })
@@ -80,7 +88,38 @@ function startMapbox() {
     });
 }
 
-function viewLocationDetails(venue) {
-  console.log(venue);
-  document.getElementById('name').value = venue.venue.name;
+function viewLocationDetails() {
+  console.log(currentVenue);
+  var name = currentVenue.venue.name;
+  var category = currentVenue.venue.categories[0].name;
+  var street = currentVenue.venue.location.address;
+  var address = currentVenue.venue.location.city + ", " + 
+                currentVenue.venue.location.state + " " + 
+                currentVenue.venue.location.postalCode;
+  document.getElementById('name').innerHTML = name != undefined ? name : '';
+  document.getElementById('category').innerHTML = category != undefined ? category : '';
+  document.getElementById('street').innerHTML = street != undefined ? street : '';
+  document.getElementById('city-state-postalCode').innerHTML = address != undefined ? address : '';
+  var addLocation = document.getElementById('add-to-itinerary');
+  addLocation.style.display = "block";
+  addLocation.onclick = function(e) { 
+    openModal();
+  }
+}
+
+function openModal() {
+  var modal = document.getElementById('myModal');
+  // Get the <span> element that closes the modal
+  var close = document.getElementsByClassName("close")[0];
+  modal.style.display = "block";
+
+  // When the user clicks on <span> (x), close the modal
+  close.onclick = function() {
+      modal.style.display = "none";
+  }
+  window.onclick = function(e) {
+      if (e.target == modal) {
+          modal.style.display = "none";
+      }
+  }
 }
