@@ -9,6 +9,13 @@ var itineraryJSON = {
   "itinerary" : [
   ]
 };
+var instance;
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems, edge='left');
+  instance = M.Sidenav.getInstance(elems[0]);
+});
+
 function initMap() {
     startMapbox();
 }
@@ -72,9 +79,10 @@ function startMapbox() {
             //var button = '<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>';
                         
             var domElement = document.createElement('div');
-            var nameHeading = document.createElement('h3');
-            var address = document.createElement('h5');
+            var nameHeading = document.createElement('h4');
+            var address = document.createElement('h6');
             var detailsButton = document.createElement('button');
+            detailsButton.className='btn waves-effect waves-light';
             detailsButton.innerHTML = "See Details";
             nameHeading.innerText = name;
             address.innerText = street + '\n' + city + ', ' + state + ' ' + zip;
@@ -88,7 +96,7 @@ function startMapbox() {
             
             var id = venue.venue.id;
             //var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
-            var popup = new mapboxgl.Popup({ offset: [0, -30] })
+            var popup = new mapboxgl.Popup({ offset: [0, -35] })
               .setLngLat(marker._lngLat)
               //.setHTML(htmlString)
               .setDOMContent(domElement)
@@ -103,17 +111,7 @@ function startMapbox() {
 }
 
 function viewLocationDetails(currentVenue) {
-  /*console.log("viewLocationDetails");
-  var id = element.id;
-  var lat = id.split('_')[2];
-  var lng = id.split('_')[3];
-
-  var correctVenue = venues.find(function(e) {
-                       return e.lat == venue.venue.location.lat && e.lng == venue.venue.location.lng;
-                     })[0];
-  console.log("Correct venue");
-  console.log(correctVenue);
-*/
+  instance.open();
   var name = currentVenue.venue.name;
   var category = currentVenue.venue.categories[0].name;
   var street = currentVenue.venue.location.address;
@@ -128,6 +126,7 @@ function viewLocationDetails(currentVenue) {
   var addLocation = document.getElementById('add-to-itinerary');
   addLocation.style.display = "block";
   addLocation.onclick = function(e) { 
+    instance.close();
     openModal(currentVenue);
   }
 }
@@ -144,13 +143,7 @@ function openModal(currentVenue) {
   var geocoderClose = document.getElementsByClassName('.mapboxgl-ctrl-geocoder .geocoder-pin-right');
   geocoder.style.backgroundColor = 'rgba(0, 0, 0, 0.01)';
   //geocoderClose.style.backgroundColor = 'rgba(0, 0, 0, 1)'; // WRONG
-  close.style.color = 'rgba(0, 0, 0, 0.01)';
   // When the user clicks on <span> (x), close the modal
-  close.onclick = function() {
-      modal.style.display = "none";
-      geocoder.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-      geocoderClose.style.backgroundColor = 'rgba(255, 255, 255, 1)';
-  }
   window.onclick = function(e) {
       if (e.target == modal) {
           modal.style.display = "none";
@@ -164,7 +157,6 @@ function openModal(currentVenue) {
   gCoordinatesLat = coordinatesLat;
   gCoordinatesLng = coordinatesLng;
   gModal = modal;
-  setSubmitButtonEventListener(coordinatesLat, coordinatesLng, modal);
 
 }
 
@@ -178,12 +170,6 @@ submitButton.addEventListener('click', function() {
   addToItinerary(startDate, endDate, time, gCoordinatesLat, gCoordinatesLng, checkpointName, comments);
   gModal.style.display = "none";
 });
-
-function setSubmitButtonEventListener(coordinatesLat, coordinatesLng, modal) {
-  
-  var submitButton = document.getElementById('submit-itinerary');
-}
-
 function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments) {
   var object = {"checkpointName" : checkpointName, "startDate" : startDate, 
                 "endDate" : endDate, "time" : time, "coordinates" : {"lat" : coordinatesLat, "lng" : coordinatesLng}, 

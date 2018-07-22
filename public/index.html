@@ -12,43 +12,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-    <div id="sidenav">
+
+    <ul id="sidenav" class="sidenav">
         <div id='info'>
-            <h3 id='name'></h3>
-            <h4 id='category'></h4>
-            <h4 id='street'></h4>
-            <h4 id='city-state-postalCode'></h4>
+            <h5 id='name'></h5>
+            <h6 id='category'></h6>
+            <h6 id='street'></h6>
+            <h6 id='city-state-postalCode'></h6>
             <p id='latLng'></p>
             <p id='summary'></p>
-            <button id='add-to-itinerary'>Add to Itinerary</button>
+            <button class='btn waves-effect waves-light' id='add-to-itinerary'>Add to Itinerary</button>
         </div>
+        
         <div id='itinerary-display'></div>
+    </ul>
+    <a href="#" data-target="sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+    <div id="doneModal" class="modal1">
+        <div style='margin: auto' id='confirmationModalContent' class="modal-content">
+            <i class="large material-icons">You're all done! Happy roadtripping!</i>
+        </div>
     </div>
 
     <div id="confirmationModal" class="modal1">
-        <div id='confirmationModalContent' class="modal-content">
-            <span class="close">&times;</span>
-            Done. Add another checkpoint?<br>
-            <button id="continue">Yes</button>
-            <button id="finish">No, I'm done.</button>
-        </div>
-    </div>
-    <div id="confirmationModal" class="modal1">
-        <div id='confirmationModalContent' class="modal-content">
-            <span class="close">&times;</span>
-            Done. Add another checkpoint?<br>
-            <button id="continue">Yes</button>
-            <button id="finish">No, I'm done.</button>
+        <div style='margin: auto' id='confirmationModalContent' class="modal-content">
+            <h4>Done. Add another checkpoint?</h4>
+            <button id="continue" class='btn waves-effect waves-light btn-large'>Yes</button>
+            <button id="finish" class='btn waves-effect waves-light btn-large'>No, I'm done</button>
         </div>
     </div>
     <div id="phoneNumberModal" class="modal1">
-            <div id='phoneNumberModalContent' class="modal-content">
-                <span class="close">&times;</span>
-                Add phone numbers to send your itinerary to (one per line)<br>
-                <textarea rows='10' columns='100' id='phone-numbers' placeholder='eg. 7853177359'></textarea>
-                <button id='done-numbers'>Done</button>
-            </div>
+        <div id='phoneNumberModalContent' class="modal-content">
+            <h4>Add phone numbers to send your itinerary to (one per line)</h4>
+                    <div class="input-field col s12">
+                        <textarea id="phone-numbers" class="materialize-textarea"></textarea>
+                        <label for="phone-numbers">e.g. 7853177359</label>
+                    </div>
+            <button id='done-numbers' class='btn waves-effect waves-light' >Done</button>
         </div>
+
+        <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="textarea1" class="materialize-textarea"></textarea>
+                      <label for="textarea1">Textarea</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+    </div>
     <div id="myModal" class="modal1">
         <div class="modal-content">
             <div class="row">

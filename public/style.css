@@ -2,15 +2,15 @@
 body { font: 13px Helvetica, Arial; background-color: #ffffff; }
 
 #map {
-    height: 600px;
-    width: 80.3%;
-    margin-left: 300px;
+    height: 650px;
+    width: 100%;
 }
 
 #sidenav {
     height: 100%;
     width: 300px;;
     position: fixed;
+    padding-left: 20px;
 }
 
 #info {
@@ -19,7 +19,7 @@ body { font: 13px Helvetica, Arial; background-color: #ffffff; }
 }
 
 #geocoder {
-    margin-left: 600px;
+    margin-left: 525px;
     text-indent: 40px;
     display: inline-block;
 }
@@ -28,19 +28,19 @@ body { font: 13px Helvetica, Arial; background-color: #ffffff; }
     position: absolute;
     height: 90px;
     width: 1px;
-    margin-left: 920px;
+    margin-left: 845px;
     margin-top: -95px;
 }
 
 #query-input {
-    margin-left: 575px;
+    margin-left: 500px;
     width: 20%;
     display: inline-block;
 }
 
 #submit-query-button {
     position: absolute;
-    margin-left: 950px;
+    margin-left: 875px;
     margin-top: -75px;
 }
 
@@ -52,6 +52,11 @@ body { font: 13px Helvetica, Arial; background-color: #ffffff; }
 #add-to-itinerary {
     display: none;
 }
+
+.modal1 {
+    text-align: center;
+}
+
 
 /* The Modal (background) */
 .modal1 {
