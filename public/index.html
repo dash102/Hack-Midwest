@@ -31,10 +31,7 @@
     <script src="/socket.io.js"></script>
     <script>
       var socket = io.connect('http://localhost:3001');
-      socket.on('news', function (data) {
-        console.log(data);
-        socket.emit('my other event', { my: 'data' });
-      });
+      socket.emit('itinerary', '{"sendTo": ["7853702439"], "itinerary": { "First": "a test object"}}');
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAUCHuvZdA4jXEj_3ozls0MUEEl7vuvG4s&callback=initMap">

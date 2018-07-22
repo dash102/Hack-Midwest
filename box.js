@@ -19,12 +19,12 @@ function uuid() {
 }
 
 module.exports = {
-  put: function(data) {
+  put: function(data, callback, callbackParams) {
     const folderId = '0';
     const fileName = uuid().toString();
 
     client.files.uploadFile(
-      folderId, fileName, data, (err, res) => { console.log(err); console.log(res) }
+      folderId, fileName, data.toString(), (err, res) => { err ? console.log(err) : callback(res.entries[0].id, callbackParams) }
     );
   },
   get: function(fileId, callback) {
