@@ -132,6 +132,9 @@ function viewLocationDetails(currentVenue) {
   }
 }
 
+var gCoordinatesLat;
+var gCoordinatesLng;
+var gModal;
 function openModal(currentVenue) {
   var modal = document.getElementById('myModal');
   // Get the <span> element that closes the modal
@@ -158,23 +161,27 @@ function openModal(currentVenue) {
   
   var coordinatesLat = currentVenue.venue.location.lat;
   var coordinatesLng = currentVenue.venue.location.lng;
+  gCoordinatesLat = coordinatesLat;
+  gCoordinatesLng = coordinatesLng;
+  gModal = modal;
   setSubmitButtonEventListener(coordinatesLat, coordinatesLng, modal);
 
 }
 
+var submitButton = document.getElementById('submit-itinerary');
+submitButton.addEventListener('click', function() {
+  var checkpointName = document.getElementById('checkpoint').value;
+  var startDate = document.getElementById('start').value;
+  var endDate = document.getElementById('end').value;
+  var time = document.getElementById('trip-time').value;
+  var comments = document.getElementById('comments').value;
+  addToItinerary(startDate, endDate, time, gCoordinatesLat, gCoordinatesLng, checkpointName, comments);
+  gModal.style.display = "none";
+});
+
 function setSubmitButtonEventListener(coordinatesLat, coordinatesLng, modal) {
   
   var submitButton = document.getElementById('submit-itinerary');
-
-  submitButton.addEventListener('click', function() {
-    var checkpointName = document.getElementById('checkpoint').value;
-    var startDate = document.getElementById('start').value;
-    var endDate = document.getElementById('end').value;
-    var time = document.getElementById('trip-time').value;
-    var comments = document.getElementById('comments').value;
-    addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments);
-    modal.style.display = "none";
-  });
 }
 
 function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments) {
