@@ -1,7 +1,7 @@
 var CLIENT_ID = config.CLIENT_ID;
 var CLIENT_SECRET = config.CLIENT_SECRET;
 var MAPS_API_KEY = config.MAPS_API_KEY;
-var currentVenue;
+var venues = [];
 var itineraryJSON = {
   "sendTo" : [
 
@@ -58,7 +58,7 @@ function startMapbox() {
         function (data) {
             
           $.each(data.response.groups[0].items, function (i, venue) {
-            currentVenue = venue;
+            venues.push(venue);
             var venueLat = venue.venue.location.lat;
             var venueLng = venue.venue.location.lng;
             // add marker here
@@ -69,14 +69,32 @@ function startMapbox() {
             var city = venue.venue.location.city;
             var state = venue.venue.location.state;
             var zip = venue.venue.location.postalCode;
+            //var category = venue.venue.categories[0].name;
             var address = street + '<br>' + city + ', ' + state + ' ' + zip;
-            var button = '<button id="details-button" onclick="viewLocationDetails(' + venue + ');">See details</button>';
+            console.log('<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>');
+            //var button = '<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>';
+                        
+            var domElement = document.createElement('div');
+            var nameHeading = document.createElement('h3');
+            var address = document.createElement('h5');
+            var detailsButton = document.createElement('button');
+            detailsButton.innerHTML = "See Details";
+            nameHeading.innerText = name;
+            address.innerText = street + '\n' + city + ', ' + state + ' ' + zip;
+            detailsButton.addEventListener('click', function() {
+              viewLocationDetails(venue);
+            });
 
+            domElement.appendChild(nameHeading);
+            domElement.appendChild(address);
+            domElement.appendChild(detailsButton);
+            
             var id = venue.venue.id;
-            var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
+            //var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
             var popup = new mapboxgl.Popup({ offset: [0, -30] })
               .setLngLat(marker._lngLat)
-              .setHTML(htmlString)
+              //.setHTML(htmlString)
+              .setDOMContent(domElement)
               .addTo(map);
             marker.setPopup(popup);
             marker.togglePopup(popup);
@@ -88,12 +106,24 @@ function startMapbox() {
 }
 
 function viewLocationDetails(currentVenue) {
+  /*console.log("viewLocationDetails");
+  var id = element.id;
+  var lat = id.split('_')[2];
+  var lng = id.split('_')[3];
+
+  var correctVenue = venues.find(function(e) {
+                       return e.lat == venue.venue.location.lat && e.lng == venue.venue.location.lng;
+                     })[0];
+  console.log("Correct venue");
+  console.log(correctVenue);
+*/
   var name = currentVenue.venue.name;
   var category = currentVenue.venue.categories[0].name;
   var street = currentVenue.venue.location.address;
   var address = currentVenue.venue.location.city + ", " + 
                 currentVenue.venue.location.state + " " + 
                 currentVenue.venue.location.postalCode;
+  //var address = city + ", " + state + " " + postalCode;
   document.getElementById('name').innerHTML = name != undefined ? name : '';
   document.getElementById('category').innerHTML = category != undefined ? category : '';
   document.getElementById('street').innerHTML = street != undefined ? street : '';
