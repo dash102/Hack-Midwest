@@ -50,6 +50,7 @@
   cursor:pointer;
   }
 .mapboxgl-ctrl-geocoder .geocoder-pin-right * {
+  background-color:#fff;
   z-index:2;
   position:absolute;
   right:10px;

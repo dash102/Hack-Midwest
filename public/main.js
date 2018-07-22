@@ -131,11 +131,11 @@ function viewLocationDetails(currentVenue) {
   var addLocation = document.getElementById('add-to-itinerary');
   addLocation.style.display = "block";
   addLocation.onclick = function(e) { 
-    openModal();
+    openModal(currentVenue);
   }
 }
 
-function openModal() {
+function openModal(currentVenue) {
   var modal = document.getElementById('myModal');
   // Get the <span> element that closes the modal
   var close = document.getElementsByClassName("close")[0];
@@ -143,7 +143,7 @@ function openModal() {
   var geocoder = document.getElementsByClassName('mapboxgl-ctrl-geocoder')[0];
   var geocoderClose = document.getElementsByClassName('.mapboxgl-ctrl-geocoder .geocoder-pin-right');
   geocoder.style.backgroundColor = 'rgba(0, 0, 0, 0.01)';
-  geocoderClose.style.backgroundColor = 'rgba(0, 0, 0, 1)'; // WRONG
+  //geocoderClose.style.backgroundColor = 'rgba(0, 0, 0, 1)'; // WRONG
   close.style.color = 'rgba(0, 0, 0, 0.01)';
   // When the user clicks on <span> (x), close the modal
   close.onclick = function() {
@@ -158,4 +158,28 @@ function openModal() {
           geocoderClose.style.backgroundColor = 'rgba(255, 255, 255, 1)';
       }
   }
+  
+  
+  var coordinatesLat = currentVenue.venue.location.lat;
+  var coordinatesLng = currentVenue.venue.location.lng;
+  console.log(currentVenue);
+
+  var submitButton = document.getElementById('submit-itinerary');
+  submitButton.addEventListener('click', function() {
+
+    var checkpointName = document.getElementById('checkpoint').value;
+    var startDate = document.getElementById('start').value;
+    var endDate = document.getElementById('end').value;
+    var time = document.getElementById('trip-time').value;
+    var comments = document.getElementById('comments').value;
+    addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments);
+  });
+}
+
+function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments) {
+  var object = {"checkpointName" : checkpointName, "startDate" : startDate, 
+                "endDate" : endDate, "time" : time, "coordinates" : {"lat" : coordinatesLat, "lng" : coordinatesLng}, 
+                "comments" : comments};
+  itineraryJSON.itinerary.push(object);
+  console.log(itineraryJSON);
 }

@@ -18,11 +18,28 @@
         <button id='add-to-itinerary'>Add to Itinerary</button>
 
     </div>
+    <div id="confirmationModal" class="modal">
+        Done. Add another checkpoint?
+        <button id="continue">Yes</button>
+        <button id="finish">No, I'm done.</button>
+    </div>
     <div id="myModal" class="modal">
+        
 
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
+            <fieldset>
+                <legend>Name Checkpoint</legend>
+
+                <div>
+                    <label for="checkpoint">Checkpoint</label>
+                    <input id="checkpoint" name="checkpoint" />
+                </div>
+    
+            </fieldset>
+            <br>
+
             <fieldset>
                 <legend>Choose trip dates</legend>
 
@@ -41,6 +58,7 @@
                 </div>
 
             </fieldset>
+            <br>
 
             <fieldset>
                 <legend>Select time</legend>
@@ -54,7 +72,7 @@
             <br>
             <textarea rows="6" columns="600" id="comments" placeholder="Notes (optional)"></textarea>
             <br><br>
-            <button type="submit">Add to Itinerary</button>
+            <button type="submit" id="submit-itinerary">Add to Itinerary</button>
         </div>
 
       </div>
