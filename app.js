@@ -16,7 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.get('/view', (req, res) => console.log(req));
+app.get('/view', (req, res) => res.send(view.render(req.query['id'])));
 app.use(express.static(path.join(__dirname, 'public')));
 
 function sendUrl(fileId, numbers) {

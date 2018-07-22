@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+var box = require('./box');
 
-/* GET home page. */
-router.get('/view', function(req, res, next) {
-    console.log(req);
-});
-
-module.exports = router;
+module.exports = {
+  render: async function(id) {
+    var file = await box.get(id);
+    console.log(file);
+  }
+};
