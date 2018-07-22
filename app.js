@@ -6,6 +6,7 @@ var logger = require('morgan');
 var box = require('./box');
 var twilio = require('./twilio');
 var view = require('./view');
+var bitly = require('./bitly');
 
 var app = express();
 
@@ -20,15 +21,11 @@ app.get('/view', async (req, res) => res.send(await view.render(req.query['id'])
 app.use(express.static(path.join(__dirname, 'public')));
 
 function sendUrl(fileId, numbers) {
-  var url = 'roadtrip.us-east-1.elasticbeanstalk.com/v?i=' + fileId;
+  var url = 'https://bit.ly/' + fileId;
   numbers.forEach(number => twilio.send(number, url));
 }
 
 io.on('connection', function(socket) {
-    console.log('a user connected');
-    socket.on('disconnect', function() {
-        console.log('user disconnected');
-    });
     socket.on('itinerary', function(json) {
         console.log(json);
         box.put(json.itinerary, sendUrl, json.phoneNumbers);

@@ -28,7 +28,6 @@ module.exports = {
     );
   },
   get: async function(fileId) {
-    console.log(fileId);
     return new Promise((resolve, reject) => {
       client.files.getReadStream(fileId, null, (error, file) => {
         if(error) {
