@@ -1,3 +1,4 @@
+/*
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -27,7 +28,7 @@ function sendUrl(fileId, numbers) {
   var url = 'https://roadtrip.us-east-1.elasticbeanstalk.com/view?id=' + fileId;
   numbers.forEach(number => twilio.send(number, url));
 }
-/*
+
 io.on('connection', function(socket) {
     socket.on('itinerary', function(json) {
         console.log(json);
@@ -38,5 +39,27 @@ io.on('connection', function(socket) {
 http.listen(3001, function() {
     console.log('listening on *:3001');
 });
+
+module.exports = app;
 */
+
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+var app = express();
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
 module.exports = app;
