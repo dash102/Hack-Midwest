@@ -16,7 +16,6 @@ module.exports = {
     doc.getElementById('geocoder').parentNode.removeChild(doc.getElementById('geocoder'));
     doc.getElementById('query-input').parentNode.removeChild(doc.getElementById('query-input'));
     doc.getElementById('submit-query-button').parentNode.removeChild(doc.getElementById('submit-query-button'));
-    doc.getElementById('query-text').parentNode.removeChild(doc.getElementById('query-text'));
 
     var itineraryDiv = doc.getElementById('itinerary-display');
     var divs = [];
@@ -24,15 +23,25 @@ module.exports = {
     json.forEach((element) => {
       var div = doc.createElement('div');
       var checkpointName = doc.createElement('h3');
+      checkpointName.id = 'checkpointName';
       var locationName = doc.createElement('h3');
+      locationName.id = 'locationName';
       var street = doc.createElement('h3');
+      street.id = 'street';
       var cityStatePostalCode = doc.createElement('h3');
+      cityStatePostalCode.id = 'cityStatePostalCode';
       var startDate = doc.createElement('h3');
+      startDate.id = 'startDate';
       var endDate = doc.createElement('h3');
+      endDate.id = 'endDate';
       var time = doc.createElement('h3');
+      time.id = 'time';
       var comments = doc.createElement('h3');
+      comments.id = 'comments';
       var lat = doc.createElement('h3');
+      lat.id = 'lat';
       var lng = doc.createElement('h3');
+      lng.id = 'lng';
 
       locationName.innerHTML = element.locationName;
       checkpointName.innerHTML = element.checkpointName;

@@ -2,6 +2,8 @@ var CLIENT_ID = config.CLIENT_ID;
 var CLIENT_SECRET = config.CLIENT_SECRET;
 var MAPS_API_KEY = config.MAPS_API_KEY;
 var venues = [];
+var markers = [];
+var map = null;
 var itineraryJSON = {
   "phoneNumbers" : [
 
@@ -30,17 +32,21 @@ function addSearch(map) {
 
 function startMapbox() {
   mapboxgl.accessToken = MAPS_API_KEY;
-  var map = new mapboxgl.Map({
+  map = new mapboxgl.Map({
     container: 'map',
     //style: 'mapbox://styles/dash102/cjjvnp4yx5e3x2sqvqddxuhd9',
     style: 'mapbox://styles/mapbox/streets-v10',
     zoom: 1
   });
 
+  if(document.getElementById('itinerary-display').childNodes.length > 0) {
+    addExisting();
+    return;
+  }
+
   addSearch(map);
 
   var findRecommendationButton = document.getElementById('submit-query-button');
-  var markers = [];
 
   var marker;
   findRecommendationButton.addEventListener('click', function() {
@@ -110,6 +116,42 @@ function startMapbox() {
     });
 }
 
+function addExisting() {
+  var div = document.getElementById('itinerary-display');
+
+  div.childNodes.forEach(n => {
+    var venueLat = n.querySelector('#lat').innerHTML;
+    var venueLng = n.querySelector('#lng').innerHTML;
+    // add marker here
+    marker = new mapboxgl.Marker()
+      .setLngLat([venueLng, venueLat]);
+    var name = n.querySelector('#locationName').innerHTML;
+    var street = n.querySelector('#street').innerHTML;
+    var cityStatePostalCode = n.querySelector('#cityStatePostalCode').innerHTML;
+    //var button = '<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>';
+
+    var domElement = document.createElement('div');
+    var nameHeading = document.createElement('h4');
+    var address = document.createElement('h6');
+    nameHeading.innerText = name;
+    address.innerText = street + '\n' + cityStatePostalCode;
+
+    domElement.appendChild(nameHeading);
+    domElement.appendChild(address);
+
+    //var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
+    var popup = new mapboxgl.Popup({ offset: [0, -35] })
+      .setLngLat(marker._lngLat)
+      //.setHTML(htmlString)
+      .setDOMContent(domElement)
+      .addTo(map);
+    marker.setPopup(popup);
+    marker.togglePopup(popup);
+    markers.push(marker);
+    marker.addTo(map);
+  });
+}
+
 function viewLocationDetails(currentVenue) {
   instance.open();
   var name = currentVenue.venue.name;
@@ -174,9 +216,6 @@ submitButton.addEventListener('click', function() {
   gModal.style.display = "none";
 });
 
-  var submitButton = document.getElementById('submit-itinerary');
-}
-
 function addToItinerary(locationName, street, cityStatePostalCode, startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments) {
   console.log(locationName);
   var object = {"locationName": locationName, "street": street, "cityStatePostalCode": cityStatePostalCode, "checkpointName": checkpointName, "startDate" : startDate,
@@ -188,8 +227,8 @@ function addToItinerary(locationName, street, cityStatePostalCode, startDate, en
 }
 
 function addToItineraryDisplay(object) {
-  var checkpointString = "<h5>" + object.checkpointName + "</h5>" + 
-                         "<h6>Start: " + object.startDate + " | " + "End: " + object.endDate + "</h6>" + 
+  var checkpointString = "<h5>" + object.checkpointName + "</h5>" +
+                         "<h6>Start: " + object.startDate + " | " + "End: " + object.endDate + "</h6>" +
                          "<h6>Time: " + object.time + "</h6><br>";
   document.getElementById('itinerary-display').innerHTML += checkpointString;
 }
@@ -226,7 +265,7 @@ function promptNumbers() {
 }
 
 function finishItinerary() {
-  
+
   var finishedModal = document.getElementById('doneModal');
   finishedModal.style.display = "block";
   socket.emit('itinerary', itineraryJSON);
