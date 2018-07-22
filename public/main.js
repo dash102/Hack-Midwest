@@ -25,7 +25,7 @@ function addSearch(map) {
     accessToken: MAPS_API_KEY,
     placeholder: 'Where would you like to go?'
   });
-  document.getElementById('geocoder').appendChild(geocoder.onAdd(map)); 
+  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 }
 
 function startMapbox() {
@@ -38,10 +38,10 @@ function startMapbox() {
   });
 
   addSearch(map);
-  
+
   var findRecommendationButton = document.getElementById('submit-query-button');
   var markers = [];
-  
+
   var marker;
   findRecommendationButton.addEventListener('click', function() {
     var latRec = map.getCenter().lat;
@@ -52,16 +52,16 @@ function startMapbox() {
 
     var query = document.getElementById('query-input').value;
     query = query.replace(/\s/g, '_');
-    var fourSquareLink = 'https://api.foursquare.com/v2/venues/explore/?' + 
+    var fourSquareLink = 'https://api.foursquare.com/v2/venues/explore/?' +
       'll=' + latRec + ',' + lngRec + '&' + // change lat lng here
-      'limit=100&' + 
-      'query=' + query + '&' + 
-      'client_id=' + CLIENT_ID + '&' + 
+      'limit=100&' +
+      'query=' + query + '&' +
+      'client_id=' + CLIENT_ID + '&' +
       'client_secret=' + CLIENT_SECRET +
       '&v=20180719';
       $.getJSON(fourSquareLink,
         function (data) {
-            
+
           $.each(data.response.groups[0].items, function (i, venue) {
             venues.push(venue);
             var venueLat = venue.venue.location.lat;
@@ -77,7 +77,7 @@ function startMapbox() {
             //var category = venue.venue.categories[0].name;
             var address = street + '<br>' + city + ', ' + state + ' ' + zip;
             //var button = '<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>';
-                        
+
             var domElement = document.createElement('div');
             var nameHeading = document.createElement('h4');
             var address = document.createElement('h6');
@@ -93,7 +93,7 @@ function startMapbox() {
             domElement.appendChild(nameHeading);
             domElement.appendChild(address);
             domElement.appendChild(detailsButton);
-            
+
             var id = venue.venue.id;
             //var htmlString = '<h3>' + name + '</h3><h5>' + address + '</h5>' + button;
             var popup = new mapboxgl.Popup({ offset: [0, -35] })
@@ -115,8 +115,8 @@ function viewLocationDetails(currentVenue) {
   var name = currentVenue.venue.name;
   var category = currentVenue.venue.categories[0].name;
   var street = currentVenue.venue.location.address;
-  var address = currentVenue.venue.location.city + ", " + 
-                currentVenue.venue.location.state + " " + 
+  var address = currentVenue.venue.location.city + ", " +
+                currentVenue.venue.location.state + " " +
                 currentVenue.venue.location.postalCode;
   //var address = city + ", " + state + " " + postalCode;
   document.getElementById('name').innerHTML = name != undefined ? name : '';
@@ -125,7 +125,7 @@ function viewLocationDetails(currentVenue) {
   document.getElementById('city-state-postalCode').innerHTML = address != undefined ? address : '';
   var addLocation = document.getElementById('add-to-itinerary');
   addLocation.style.display = "block";
-  addLocation.onclick = function(e) { 
+  addLocation.onclick = function(e) {
     instance.close();
     openModal(currentVenue);
   }
@@ -151,7 +151,7 @@ function openModal(currentVenue) {
           geocoderClose.style.backgroundColor = 'rgba(255, 255, 255, 1)';
       }
   }
-  
+
   var coordinatesLat = currentVenue.venue.location.lat;
   var coordinatesLng = currentVenue.venue.location.lng;
   gCoordinatesLat = coordinatesLat;
@@ -162,26 +162,34 @@ function openModal(currentVenue) {
 
 var submitButton = document.getElementById('submit-itinerary');
 submitButton.addEventListener('click', function() {
+  var locationName = document.getElementById('name').innerHTML;
+  var street = document.getElementById('street').innerHTML
+  var cityStatePostalCode = document.getElementById('city-state-postalCode').innerHTML;
   var checkpointName = document.getElementById('checkpoint').value;
   var startDate = document.getElementById('start').value;
   var endDate = document.getElementById('end').value;
   var time = document.getElementById('trip-time').value;
   var comments = document.getElementById('comments').value;
-  addToItinerary(startDate, endDate, time, gCoordinatesLat, gCoordinatesLng, checkpointName, comments);
+  addToItinerary(locationName, street, cityStatePostalCode, startDate, endDate, time, gCoordinatesLat, gCoordinatesLng, checkpointName, comments);
   gModal.style.display = "none";
 });
-function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments) {
-  var object = {"checkpointName" : checkpointName, "startDate" : startDate, 
-                "endDate" : endDate, "time" : time, "coordinates" : {"lat" : coordinatesLat, "lng" : coordinatesLng}, 
+
+  var submitButton = document.getElementById('submit-itinerary');
+}
+
+function addToItinerary(locationName, street, cityStatePostalCode, startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments) {
+  console.log(locationName);
+  var object = {"locationName": locationName, "street": street, "cityStatePostalCode": cityStatePostalCode, "checkpointName": checkpointName, "startDate" : startDate,
+                "endDate" : endDate, "time" : time, "coordinates" : {"lat" : coordinatesLat, "lng" : coordinatesLng},
                 "comments" : comments};
   itineraryJSON.itinerary.push(object);
   addToItineraryDisplay(object);
-  showConfirmationModal();  
+  showConfirmationModal();
 }
 
 function addToItineraryDisplay(object) {
-  var checkpointString = "<b>Name: " + object.checkpointName + "</b><br>" + 
-                         "Start date: " + object.startDate + " | " + "End date: " + object.endDate + "<br>" + 
+  var checkpointString = "<b>Name: " + object.checkpointName + "</b><br>" +
+                         "Start date: " + object.startDate + " | " + "End date: " + object.endDate + "<br>" +
                          "Time: " + object.time + "<br><br>";
   document.getElementById('itinerary-display').innerHTML += checkpointString;
 }
@@ -211,7 +219,7 @@ function promptNumbers() {
     numbersArray.forEach(function(number) {
       itineraryJSON.phoneNumbers.push(number);
     });
-    
+
     finishItinerary();
   });
 }
