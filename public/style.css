@@ -82,6 +82,14 @@ body { font: 13px Helvetica, Arial; background-color: #ffffff; }
     height: 70%;
 }
 
+#itinerary-display {
+    padding-left: 10px;
+}
+
+#doneModalContent {
+    height: 25%;
+}
+
 #submit-itinerary {
     margin-left: 190px;
 }

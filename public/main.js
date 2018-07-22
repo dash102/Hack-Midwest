@@ -180,9 +180,9 @@ function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng
 }
 
 function addToItineraryDisplay(object) {
-  var checkpointString = "<b>Name: " + object.checkpointName + "</b><br>" + 
-                         "Start date: " + object.startDate + " | " + "End date: " + object.endDate + "<br>" + 
-                         "Time: " + object.time + "<br><br>";
+  var checkpointString = "<h5>" + object.checkpointName + "</h5>" + 
+                         "<h6>Start: " + object.startDate + " | " + "End: " + object.endDate + "</h6>" + 
+                         "<h6>Time: " + object.time + "</h6><br>";
   document.getElementById('itinerary-display').innerHTML += checkpointString;
 }
 
@@ -213,10 +213,13 @@ function promptNumbers() {
     });
     
     finishItinerary();
+    phoneNumberModal.style.display = "none";
   });
 }
 
 function finishItinerary() {
-  console.log(itineraryJSON);
+  
+  var finishedModal = document.getElementById('doneModal');
+  finishedModal.style.display = "block";
   socket.emit('itinerary', itineraryJSON);
 }
