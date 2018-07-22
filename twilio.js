@@ -4,11 +4,14 @@ var twilio = require('twilio')(config.accountSid, config.authToken);
 var bitly = require('./bitly');
 
 module.exports = {
-  send: function(to, message) {
+  send: async function(to, message) {
     console.log(to);
     console.log('a'+message);
 
+    var data = await bitly.shorten(message);
+    console.log(JSON.stringify(data));
+
     twilio.messages
-      .create({from: '+17852687095', body: message, to: ('+1' + to)});
+      .create({from: '+17852687095', body: JSON.parse(data).data.url, to: ('+1' + to)});
   }
 }

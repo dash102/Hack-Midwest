@@ -13,18 +13,21 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.get('/view', async (req, res) => res.send(await view.render(req.query['id'])));
+//app.get('/view', async (req, res) => res.send(await view.render(req.query['id'])));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.listen(80);
+
 function sendUrl(fileId, numbers) {
-  var url = 'https://bit.ly/' + fileId;
+  var url = 'https://roadtrip.us-east-1.elasticbeanstalk.com/view?id=' + fileId;
   numbers.forEach(number => twilio.send(number, url));
 }
-
+/*
 io.on('connection', function(socket) {
     socket.on('itinerary', function(json) {
         console.log(json);
@@ -35,5 +38,5 @@ io.on('connection', function(socket) {
 http.listen(3001, function() {
     console.log('listening on *:3001');
 });
-
+*/
 module.exports = app;
