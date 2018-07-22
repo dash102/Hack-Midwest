@@ -14,13 +14,11 @@ function initMap() {
 }
 
 function addSearch(map) {
-  console.log("adding search");
   var geocoder = new MapboxGeocoder({
     accessToken: MAPS_API_KEY,
     placeholder: 'Where would you like to go?'
   });
-  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));  
-  console.log(geocoder);
+  document.getElementById('geocoder').appendChild(geocoder.onAdd(map)); 
 }
 
 function startMapbox() {
@@ -71,7 +69,6 @@ function startMapbox() {
             var zip = venue.venue.location.postalCode;
             //var category = venue.venue.categories[0].name;
             var address = street + '<br>' + city + ', ' + state + ' ' + zip;
-            console.log('<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>');
             //var button = '<button id="details_button_' + venueLat + '_' + venueLng + ' onclick="viewLocationDetails(this);">See details</button>';
                         
             var domElement = document.createElement('div');
@@ -162,7 +159,6 @@ function openModal(currentVenue) {
   
   var coordinatesLat = currentVenue.venue.location.lat;
   var coordinatesLng = currentVenue.venue.location.lng;
-  console.log(currentVenue);
 
   var submitButton = document.getElementById('submit-itinerary');
   submitButton.addEventListener('click', function() {
@@ -173,6 +169,7 @@ function openModal(currentVenue) {
     var time = document.getElementById('trip-time').value;
     var comments = document.getElementById('comments').value;
     addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng, checkpointName, comments);
+    modal.style.display = "none";
   });
 }
 
@@ -181,5 +178,25 @@ function addToItinerary(startDate, endDate, time, coordinatesLat, coordinatesLng
                 "endDate" : endDate, "time" : time, "coordinates" : {"lat" : coordinatesLat, "lng" : coordinatesLng}, 
                 "comments" : comments};
   itineraryJSON.itinerary.push(object);
+  showConfirmationModal();  
+}
+
+function showConfirmationModal() {
+  var confirmationModal = document.getElementById('confirmationModal');
+  confirmationModal.style.display = "block";
+  var yesButton = document.getElementById('continue');
+  var noButton = document.getElementById('finish');
+  yesButton.addEventListener('click', function() {
+    confirmationModal.style.display = "none";
+  });
+
+  noButton.addEventListener('click', function() {
+    confirmationModal.style.display = "none";
+    finishItinerary();
+  });
+}
+
+function finishItinerary() {
   console.log(itineraryJSON);
+  console.log("done");
 }

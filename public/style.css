@@ -54,6 +54,10 @@ body { font: 13px Helvetica, Arial; }
     height: 70%;
 }
 
+#confirmationModalContent {
+    height: 30%;
+}
+
 /* The Close Button */
 .close {
     color: #aaaaaa;
