@@ -141,17 +141,21 @@ function openModal() {
   var close = document.getElementsByClassName("close")[0];
   modal.style.display = "block";
   var geocoder = document.getElementsByClassName('mapboxgl-ctrl-geocoder')[0];
+  var geocoderClose = document.getElementsByClassName('.mapboxgl-ctrl-geocoder .geocoder-pin-right');
   geocoder.style.backgroundColor = 'rgba(0, 0, 0, 0.01)';
+  geocoderClose.style.backgroundColor = 'rgba(0, 0, 0, 1)'; // WRONG
   close.style.color = 'rgba(0, 0, 0, 0.01)';
   // When the user clicks on <span> (x), close the modal
   close.onclick = function() {
       modal.style.display = "none";
       geocoder.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+      geocoderClose.style.backgroundColor = 'rgba(255, 255, 255, 1)';
   }
   window.onclick = function(e) {
       if (e.target == modal) {
           modal.style.display = "none";
           geocoder.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+          geocoderClose.style.backgroundColor = 'rgba(255, 255, 255, 1)';
       }
   }
 }
