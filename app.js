@@ -30,9 +30,8 @@ io.on('connection', function(socket) {
         console.log('user disconnected');
     });
     socket.on('itinerary', function(jsonString) {
-        var data = JSON.parse(jsonString);
-        console.log(data);
-        box.put(data.itinerary, sendUrl, data.sendTo);
+        console.log(jsonString);
+        box.put(jsonString.itinerary, sendUrl, jsonString.phoneNumbers);
     });
 });
 

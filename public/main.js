@@ -3,7 +3,7 @@ var CLIENT_SECRET = config.CLIENT_SECRET;
 var MAPS_API_KEY = config.MAPS_API_KEY;
 var venues = [];
 var itineraryJSON = {
-  "sendTo" : [
+  "phoneNumbers" : [
 
   ],
   "itinerary" : [
@@ -192,11 +192,26 @@ function showConfirmationModal() {
 
   noButton.addEventListener('click', function() {
     confirmationModal.style.display = "none";
+    promptNumbers();
+  });
+}
+
+function promptNumbers() {
+  var phoneNumberModal = document.getElementById('phoneNumberModal');
+  phoneNumberModal.style.display = "block";
+  var doneNumbers = document.getElementById('done-numbers');
+  var numbersArray = [];
+  doneNumbers.addEventListener('click', function() {
+    numbersArray = document.getElementById('phone-numbers').value.split('\n');
+    numbersArray.forEach(function(number) {
+      itineraryJSON.phoneNumbers.push(number);
+    });
+    
     finishItinerary();
   });
 }
 
 function finishItinerary() {
   console.log(itineraryJSON);
-  console.log("done");
+  socket.emit('itinerary', itineraryJSON);
 }
