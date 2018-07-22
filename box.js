@@ -24,7 +24,7 @@ module.exports = {
     const fileName = uuid().toString();
 
     client.files.uploadFile(
-      folderId, fileName, data.toString(), (err, res) => { err ? console.log(err) : callback(res.entries[0].id, callbackParams) }
+      folderId, fileName, JSON.stringify(data), (err, res) => { err ? console.log(err) : callback(res.entries[0].id, callbackParams) }
     );
   },
   get: async function(fileId) {
