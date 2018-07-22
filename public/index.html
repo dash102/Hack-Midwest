@@ -38,7 +38,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type='text/javascript' src='/config.js'></script>
     <script src="main.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:3001');
+      socket.emit('itinerary', '{"sendTo": ["7853702439"], "itinerary": { "First": "a test object"}}');
+    </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAUCHuvZdA4jXEj_3ozls0MUEEl7vuvG4s&callback=initMap">
     </script>
